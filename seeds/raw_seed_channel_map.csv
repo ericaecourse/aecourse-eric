@@ -1,0 +1,5 @@
+raw_channel,canonical_channel,paid_flag
+google,search,True
+meta,paid_social,True
+email,email,False
+display,display,True
