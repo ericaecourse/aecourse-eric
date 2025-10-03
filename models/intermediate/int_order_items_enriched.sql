@@ -5,7 +5,7 @@ with order_items as (
 ),
 
 customers as (
-    select customer_id, email from {{ ref('stg_customers') }}
+    select customer_id, email, full_name from {{ ref('stg_customers') }}
 ),
 
 orders as (
@@ -15,7 +15,8 @@ orders as (
 select
     orders.*,
     order_items.product_sku as product_sku,
-    customers.email as email
+    customers.email as email,
+    customers.full_name as full_name
 from orders
 join order_items
     on orders.order_id = order_items.order_id
