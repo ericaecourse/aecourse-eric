@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: stg_adspend
+    description: "Staging file which ingests our adspend from our seed file source."
+    columns:
+      - name: unique_id
+        description: "Primary key: Combination of date, channel, campaign_id."
+        tests:
+          - unique
+          - not_null
+
+      - name: date
+        description: "Date of the adspend"
+
+      - name: paid_flag
+        description: "Boolean flag which represents if a campaign is paid or not."
+
+      - name: canonical_channel
+        description: "Channel for the adspend"

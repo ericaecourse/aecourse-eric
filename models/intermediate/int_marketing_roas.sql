@@ -9,6 +9,10 @@ orders as (
 )
 
 select
+    {{ dbt_utils.generate_surrogate_key([
+        'date',
+        'campaign_id'
+    ]) }} as unique_id,
     date,
     campaign_id as campaign,
     sum(cost_usd) as spend,
@@ -20,5 +24,5 @@ from adspend
 left join orders
     on adspend.date = orders.order_date
     and adspend.campaign_id = orders.utm_campaign
-{{ dbt_utils.group_by(2) }}
+{{ dbt_utils.group_by(3) }}
 

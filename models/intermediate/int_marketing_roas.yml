@@ -1,0 +1,9 @@
+models:
+  - name: int_marketing_roas
+    description: "Intermediate table which calcualtes our return on adspend."
+    columns:
+      - name: unique_id
+        description: "Primary key: Combination of date, channel, campaign_id."
+        tests:
+          - unique
+          - not_null
