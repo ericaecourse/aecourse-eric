@@ -1,7 +1,9 @@
-{{ config(schema="staging", tags=["staging"]) }}
+{{ config(schema="staging", materialized="incremental", unique_id="unique_id", tags=["staging"]) }}
 
 with raw_orders as (
     select * from {{ ref('raw_orders_batch1') }}
+    union all
+    select * from {{ ref('raw_orders_batch2') }}
     qualify row_number () over (partition by order_id order by updated_at desc) = 1
 ),
 
@@ -32,4 +34,7 @@ from orders_transformed
 left join usd_exchange_rates
     on orders_transformed.order_date = usd_exchange_rates.date
     and orders_transformed.currency = usd_exchange_rates.currency
+{% if is_incremental() %}
+  where order_ts_utc > (select max(order_ts_utc) from {{ this }})
+{% endif %}
 
