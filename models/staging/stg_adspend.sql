@@ -8,8 +8,9 @@ with raw_adspend as (
 
 channel_mapping as (
     select * from {{ ref('raw_seed_channel_map') }}
-)
+),
 
+final as (
 select
     {{ dbt_utils.generate_surrogate_key([
         'date',
@@ -30,4 +31,8 @@ left join channel_mapping
 {% if is_incremental() %}
   where unique_id not in (select unique_id from {{ this }})
 {% endif %}
+)
+
+select * from final
+qualify row_number() over (partition by unique_id)
 
