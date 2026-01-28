@@ -1,4 +1,4 @@
-{{ config(schema="staging", materialized="incremental", unique_id="unique_id", tags=["staging"]) }}
+{{ config(schema="staging", materialized="table", unique_id="unique_id", tags=["staging"]) }}
 
 with raw_order_items as (
     select * from {{ ref('raw_order_items_batch1' )}}
