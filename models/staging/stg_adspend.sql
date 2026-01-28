@@ -34,5 +34,5 @@ left join channel_mapping
 )
 
 select * from final
-qualify row_number() over (partition by unique_id)
+qualify row_number() over (partition by unique_id) = 1
 
