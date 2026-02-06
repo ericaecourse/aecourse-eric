@@ -2,7 +2,7 @@
 
 WITH nested AS (
   SELECT *, SPLIT(TRIM(full_name), ' ') AS name_parts
-  FROM {{ ref('stg_customers') }}
+  FROM {{ ref('stg_customers') }} 
 )
 
 select
